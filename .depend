@@ -2,7 +2,7 @@ arrayBuffer.cmo: arrayBuffer.cmi
 arrayBuffer.cmx: arrayBuffer.cmi
 audio_web_api.cmo: arrayBuffer.cmi audio_web_api.cmi
 audio_web_api.cmx: arrayBuffer.cmx audio_web_api.cmi
-examples/audio_context_test.cmo:
-examples/audio_context_test.cmx:
+examples/audio_context_test.cmo: audio_web_api.cmi
+examples/audio_context_test.cmx: audio_web_api.cmx
 arrayBuffer.cmi:
 audio_web_api.cmi: arrayBuffer.cmi
