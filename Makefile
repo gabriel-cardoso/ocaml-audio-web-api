@@ -3,13 +3,13 @@ LIB=$(JS_OF_OCAML_PATH)/lib
 
 OCAMLFLAGS=$(INCLUDES) -package js_of_ocaml.syntax -syntax camlp4o
 OCAMLIFLAGS=$(INCLUDES) -package js_of_ocaml -pp "cpp -traditional-cpp"
-LIBRARY=ocaml_audio_web_api
-OAWAPI=$(LIBRARY).cma
+OAWAPI=ocaml_audio_web_api.cma
 MLS=$(shell find * -name "*.ml")
 MLIS=$(shell find * -name "*.mli")
 OCAMLFIND=ocamlfind
+OCAMLC=$(OCAMLFIND) ocamlc
 OCAMLDOC=ocamldoc
-CMOS=arrayBuffer.cmo audioBuffer.cmo audioGain.cmo audioListener.cmo audioNode.cmo audioParam.cmo audioProcessingEvent.cmo mediaElementAudioSourceNode.cmo waveSharperNode.cmo
+CMOS=arrayBuffer.cmo audio_web_api.cmo
 
 
 all: $(OAWAPI)
@@ -21,16 +21,16 @@ examples: all
 -include .depend
 
 $(OAWAPI): $(CMOS)
-	$(OCAMLFIND) ocamlc -a -o $@ $^
+	$(OCAMLC) -a -o $@ $^
 
 .SECONDEXPANSION:
 
 %.cmo: %.ml
 	@echo "[CC] $@"
-	$(OCAMLFIND) ocamlc $(OCAMLFLAGS) -c $<
+	$(OCAMLC) $(OCAMLFLAGS) -c $<
 
 %.cmi: %.mli
-	$(OCAMLFIND) ocamlc $(OCAMLIFLAGS) -c $<
+	$(OCAMLC) $(OCAMLIFLAGS) -c $<
 
 depend: ocamldep
 

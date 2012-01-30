@@ -1,39 +1,8 @@
 arrayBuffer.cmo: arrayBuffer.cmi
 arrayBuffer.cmx: arrayBuffer.cmi
-audioBuffer.cmo: audioGain.cmi audioBuffer.cmi
-audioBuffer.cmx: audioGain.cmx audioBuffer.cmi
-audioGain.cmo: audioParam.cmi audioGain.cmi
-audioGain.cmx: audioParam.cmx audioGain.cmi
-audioGainNode.cmo: audioNode.cmi audioGain.cmi audioGainNode.cmi
-audioGainNode.cmx: audioNode.cmx audioGain.cmx audioGainNode.cmi
-audioListener.cmo: audioListener.cmi
-audioListener.cmx: audioListener.cmi
-audioNode.cmo: audioParam.cmi audioListener.cmi audioGain.cmi audioBuffer.cmi \
-    arrayBuffer.cmi audioNode.cmi
-audioNode.cmx: audioParam.cmx audioListener.cmx audioGain.cmx audioBuffer.cmx \
-    arrayBuffer.cmx audioNode.cmi
-audioParam.cmo: audioParam.cmi
-audioParam.cmx: audioParam.cmi
-audioProcessingEvent.cmo: audioBuffer.cmi audioProcessingEvent.cmi
-audioProcessingEvent.cmx: audioBuffer.cmx audioProcessingEvent.cmi
-biquadFilterNode.cmo: audioParam.cmi audioNode.cmi biquadFilterNode.cmi
-biquadFilterNode.cmx: audioParam.cmx audioNode.cmx biquadFilterNode.cmi
-delayNode.cmo: audioParam.cmi audioNode.cmi delayNode.cmi
-delayNode.cmx: audioParam.cmx audioNode.cmx delayNode.cmi
-mediaElementAudioSourceNode.cmo: mediaElementAudioSourceNode.cmi
-mediaElementAudioSourceNode.cmx: mediaElementAudioSourceNode.cmi
-waveSharperNode.cmo: audioNode.cmi waveSharperNode.cmi
-waveSharperNode.cmx: audioNode.cmx waveSharperNode.cmi
+audio_web_api.cmo: arrayBuffer.cmi audio_web_api.cmi
+audio_web_api.cmx: arrayBuffer.cmx audio_web_api.cmi
+examples/audio_context_test.cmo:
+examples/audio_context_test.cmx:
 arrayBuffer.cmi:
-audioBuffer.cmi: audioGain.cmi
-audioGain.cmi: audioParam.cmi
-audioGainNode.cmi: audioNode.cmi audioGain.cmi
-audioListener.cmi:
-audioNode.cmi: audioParam.cmi audioListener.cmi audioGain.cmi audioBuffer.cmi \
-    arrayBuffer.cmi
-audioParam.cmi:
-audioProcessingEvent.cmi: audioBuffer.cmi
-biquadFilterNode.cmi: audioParam.cmi audioNode.cmi
-delayNode.cmi: audioParam.cmi audioNode.cmi
-mediaElementAudioSourceNode.cmi:
-waveSharperNode.cmi: audioNode.cmi
+audio_web_api.cmi: arrayBuffer.cmi

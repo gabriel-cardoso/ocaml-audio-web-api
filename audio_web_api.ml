@@ -1,10 +1,63 @@
 open Js
-open AudioListener
-open AudioParam
-open AudioBuffer
-open AudioGain
 open ArrayBuffer
-open Dom_html
+
+class type audioListener = object
+  method gain : float t prop
+
+  method dopplerFactor : float t prop
+
+  method speedOfSound : float t prop
+
+  method setPosition : float -> float -> float -> unit meth
+  method setOriention : 
+    float -> float -> float -> float -> float -> float -> unit meth
+  method setVelocity : float -> float -> float -> unit meth
+end
+
+class type audioParam = object
+
+  method value : float t prop
+
+  method minValue : float t readonly_prop
+
+  method maxValue : float t readonly_prop
+
+  method defaultValue : float t readonly_prop
+
+  method name : js_string t readonly_prop
+
+  method unit : int readonly_prop
+
+  method setValueAtTime : float -> float -> unit meth
+
+  method linearRampToValueAtTime : float -> float -> unit meth
+
+  method exponentialRampToValueAtTime : float -> float -> unit meth
+
+  method setTragetValueAtTime : float -> float -> float -> unit meth
+
+  method setValueCurveAtTime : 
+    float t js_array t -> float -> float -> unit meth
+
+  method cancelScheduledValues : float -> unit meth
+end
+
+class type audioGain = object
+  inherit audioParam
+end
+
+class type audioBuffer = object
+
+  method gain : audioGain t prop
+
+  method sampleRate : float t readonly_prop
+
+  method length : float t readonly_prop
+
+  method numberOfChannels : int readonly_prop
+
+  method getChannelData : int -> float t js_array t
+end
 
 class type audioNode = object ('self)
 
@@ -34,11 +87,11 @@ and audioBufferSourceNode = object
 
   method loop : bool t prop
 
-  method noteOn : float t -> unit meth
+  method noteOn : float -> unit meth
 
-  method noteGrainOn : float t -> float t -> float t -> unit meth
+  method noteGrainOn : float -> float -> float -> unit meth
 
-  method noteOff : float t -> unit meth
+  method noteOff : float -> unit meth
 end
 
 and dynamicsCompressorNode = object
@@ -68,9 +121,9 @@ and audioPannerNode =object
 
   method panningModel : int prop
 
-  method setPosition : float t -> float t -> float t -> unit meth
-  method setOriention : float t -> float t -> float t -> unit meth
-  method setVelocity : float t -> float t -> float t -> unit meth
+  method setPosition : float -> float -> float -> unit meth
+  method setOriention : float -> float -> float -> unit meth
+  method setVelocity : float -> float -> float -> unit meth
 
   method distanceModel : int prop
   method refDistance : float t prop
@@ -134,7 +187,7 @@ end
 and javaScriptAudioNode = object ('self)
   inherit audioNode
 
-  method onaudioprocess : ('self t, event t) event_listener prop
+  method onaudioprocess : ('self t, Dom_html.event t) Dom_html.event_listener prop
 
   method bufferSize : int readonly_prop
 end
@@ -169,7 +222,7 @@ and audioContext = object
   method listener    : audioListener t readonly_prop
   (** An AudioListener which is used for 3D spatialization. *)
 
-  method createBuffer_ : int -> int -> float t -> audioBuffer t meth
+  method createBuffer_ : int -> int -> float -> audioBuffer t meth
 
   method createBuffer  : arrayBuffer t -> bool t -> audioBuffer t meth
 
@@ -188,4 +241,29 @@ and audioContext = object
   method createChannelSplitter : audioChannelSplitter t meth
   method createChannelMerger : audioChannelMerger t meth
   method createDynamicsCompressor : dynamicsCompressorNode t meth
+end
+
+let audioContext : audioContext t constr = 
+  Unsafe.variable "webkitAudioContext"
+
+class type mediaElementAudioSourceNode = object
+  inherit audioSourceNode
+end
+
+class type waveSharperNode = object
+  inherit audioNode
+
+  method curve : float t js_array t prop
+end
+
+class type audioProcessingEvent = object
+  inherit Dom_html.event
+
+  method node : javaScriptAudioNode t prop
+
+  method playbackTime : float t readonly_prop
+
+  method inputBuffer : audioBuffer t js_array t readonly_prop
+
+  method outputBuffer : audioBuffer t js_array t readonly_prop
 end
